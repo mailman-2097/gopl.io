@@ -21,11 +21,12 @@ func main() {
 	ch := make(chan string)
 	for _, url := range os.Args[1:] {
 		go fetch(url, ch) // start a goroutine
+		fmt.Println("Starting go routine for ", url)
 	}
 	for range os.Args[1:] {
-		fmt.Println(<-ch) // receive from channel ch
+		fmt.Println("received from channel", <-ch) // receive from channel ch
 	}
-	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
+	fmt.Printf("%.2fs Total time elapsed\n", time.Since(start).Seconds())
 }
 
 func fetch(url string, ch chan<- string) {

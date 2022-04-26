@@ -6,7 +6,10 @@
 // Graph shows how to use a map of maps to represent a directed graph.
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 //!+
 var graph = make(map[string]map[string]bool)
@@ -18,9 +21,18 @@ func addEdge(from, to string) {
 		graph[from] = edges
 	}
 	edges[to] = true
+	print()
 }
-
+func print() {
+	p, err := json.MarshalIndent(graph, "", "  ")
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	fmt.Println("Graph > ")
+	fmt.Print(string(p))
+}
 func hasEdge(from, to string) bool {
+	fmt.Println("Check edge from", from, "to", to)
 	return graph[from][to]
 }
 
